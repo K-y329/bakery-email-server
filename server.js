@@ -70,7 +70,7 @@ Price: AED ${i.price * i.quantity}
       .join("\n")
 
 const result1 = await resend.emails.send({
-  from: "Bakio Bakery <bakio.orders@gmail.com>",
+  from: "Bakio Bakery <onboarding@resend.dev>",
   to: delivery.email,
   subject: `🧁 Your Order #${order.id} is Confirmed!`,
   text: `
@@ -99,7 +99,7 @@ console.log ("Customer email:", result1)
 
     // 🔥 ALSO SEND TO BAKERY (YOU)
 const result2 = await resend.emails.send({
-  from: "Bakio Bakery <bakio.orders@gmail.com>",
+  from: "Bakio Bakery <onboarding@resend.dev>",
   to: "bakio.orders@gmail.com",
   subject: `🚨 NEW ORDER #${order.id}`,
   text: `

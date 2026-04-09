@@ -69,8 +69,8 @@ Price: AED ${i.price * i.quantity}
       })
       .join("\n")
 
-await resend.emails.send({
-  from: "onboarding@resend.dev",
+const result1 = await resend.emails.send({
+  from: "Bakio Bakery <bakio.orders@gmail.com>",
   to: delivery.email,
   subject: `🧁 Your Order #${order.id} is Confirmed!`,
   text: `
@@ -95,9 +95,11 @@ We’ll contact you soon for delivery updates.
 `
 })
 
+console.log ("Customer email:", result1)
+
     // 🔥 ALSO SEND TO BAKERY (YOU)
-await resend.emails.send({
-  from: "onboarding@resend.dev",
+const result2 = await resend.emails.send({
+  from: "Bakio Bakery <bakio.orders@gmail.com>",
   to: "bakio.orders@gmail.com",
   subject: `🚨 NEW ORDER #${order.id}`,
   text: `
@@ -129,6 +131,7 @@ ${itemsText}
 Prepare this order ASAP.
 `
 })
+console.log ("bakery email:", result2)
 
     res.json({ success: true })
 

@@ -69,43 +69,66 @@ Price: AED ${i.price * i.quantity}
       })
       .join("\n")
 
-    await resend.emails.send({
-      from: "Bakio <onboarding@resend.dev>",
-      to: delivery.email, // 🔥 send to customer
-      subject: `🧁 Order #${order.id} Confirmation`,
-      text: `
-Order ID: ${order.id}
+await resend.emails.send({
+  from: "onboarding@resend.dev",
+  to: delivery.email,
+  subject: `🧁 Your Order #${order.id} is Confirmed!`,
+  text: `
+Hi ${delivery.name},
 
+Thank you for your order! 🎉
+
+Your order #${order.id} has been received and is now being prepared.
+
+------------------------
+🧁 ORDER SUMMARY
+------------------------
+${itemsText}
+
+------------------------
+💰 TOTAL: AED ${order.total}
+------------------------
+
+We’ll contact you soon for delivery updates.
+
+– Bakio Bakery 💛
+`
+})
+
+    // 🔥 ALSO SEND TO BAKERY (YOU)
+await resend.emails.send({
+  from: "onboarding@resend.dev",
+  to: "bakio.orders@gmail.com",
+  subject: `🚨 NEW ORDER #${order.id}`,
+  text: `
+========================
+🆕 NEW ORDER RECEIVED
+========================
+
+Order ID: ${order.id}
+Time: ${order.date}
+
+------------------------
+👤 CUSTOMER DETAILS
+------------------------
 Name: ${delivery.name}
 Phone: ${delivery.phone}
+Email: ${delivery.email}
 Address: ${delivery.address}
 
 ------------------------
-
+🧁 ORDER ITEMS
+------------------------
 ${itemsText}
 
-TOTAL: AED ${order.total}
+------------------------
+💰 TOTAL: AED ${order.total}
+------------------------
+
+⚠️ ACTION REQUIRED:
+Prepare this order ASAP.
 `
-    })
-
-    // 🔥 ALSO SEND TO BAKERY (YOU)
-    await resend.emails.send({
-      from: "Bakio <onboarding@resend.dev>",
-      to: "bakio.orders@gmail.com",
-      subject: `🆕 NEW ORDER #${order.id}`,
-      text: `
-New order received!
-
-${itemsText}
-
-Customer:
-${delivery.name}
-${delivery.phone}
-${delivery.address}
-
-TOTAL: AED ${order.total}
-`
-    })
+})
 
     res.json({ success: true })
 

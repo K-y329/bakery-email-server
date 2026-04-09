@@ -6,7 +6,12 @@ const app = express()
 const port = process.env.PORT || 5000
 
 // 🔥 Middleware
-app.use(cors())
+app.use(cors({
+  origin: "https://bakio-bakery.web.app",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}))
+app.options("*", cors())
 app.use(express.json())
 
 // 🔑 Put your Resend API key here

@@ -3,7 +3,7 @@ import cors from "cors"
 import { Resend } from "resend"
 
 const app = express()
-const port = 5000
+const port = process.env.PORT || 5000
 
 // 🔥 Middleware
 app.use(cors())
@@ -112,5 +112,9 @@ TOTAL: AED ${order.total}
 
 // 🚀 Start server
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`)
+  console.log(`Server running on port ${port}`)
+})
+
+app.get("/healthz", (req, res) => {
+  res.send("OK")
 })
